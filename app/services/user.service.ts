@@ -1,5 +1,5 @@
 import { Korisnik } from "../models/user.model.js";
-
+import { KorisnikFormData } from "../models/userFormData.model.js";
 
 export class UserService {
     private apiUrl: string;
@@ -20,6 +20,29 @@ export class UserService {
             })
             .then((korisnici: Korisnik[]) => {
                 return korisnici;
+            })
+            .catch(error => {
+                console.error('Error:', error.status)
+                throw error
+            });
+    }
+
+    add(formData: KorisnikFormData): Promise<Korisnik> {
+        return fetch(this.apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorMessage => {
+                        throw { status: response.status, message: errorMessage }
+                    })
+                }
+                return response.json()
+            })
+            .then((korisnik: Korisnik) => {
+                return korisnik;
             })
             .catch(error => {
                 console.error('Error:', error.status)

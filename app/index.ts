@@ -20,10 +20,10 @@ function renderData(): void {
                 cell1.textContent = korisnik.korIme;
 
                 const cell2 = document.createElement("td");
-                cell1.textContent = korisnik.ime;
+                cell2.textContent = korisnik.ime;
 
                 const cell3 = document.createElement("td");
-                cell1.textContent = korisnik.prezime;
+                cell3.textContent = korisnik.prezime;
 
                 const cell4 = document.createElement("td");
                 const dateOfBirth = new Date(korisnik.datumRodjenja);
@@ -34,20 +34,20 @@ function renderData(): void {
                 const formattedDate = `${year}-${month}-${day}`;
                 cell4.textContent = formattedDate;
 
-                const cell6 = document.createElement("td");
+                const cell5 = document.createElement("td");
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "Edit";
                 editBtn.addEventListener("click", function () {
                     window.location.href = "usersForm.html?id=" + korisnik.id;
                 });
 
-                cell6.appendChild(editBtn);
+                cell5.appendChild(editBtn);
 
                 newRow.appendChild(cell1);
                 newRow.appendChild(cell2);
                 newRow.appendChild(cell3);
                 newRow.appendChild(cell4);
-                newRow.appendChild(cell6);
+                newRow.appendChild(cell5);
                 table.appendChild(newRow);
             });
         })

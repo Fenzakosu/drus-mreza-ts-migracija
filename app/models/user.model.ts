@@ -1,7 +1,7 @@
-export interface User {
+export interface Korisnik {
     id: number,
-    username: string,
-    name: string,
-    surname: string,
-    dateOfBirth: Date
+    korIme: string,
+    ime: string,
+    prezime: string,
+    datumRodjenja: Date
 }

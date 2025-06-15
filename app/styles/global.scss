@@ -9,7 +9,7 @@ body {
     background-color: #f8f9fa;
 }
 
-#korisnici-table-details {
+#users-table-details {
     padding: 1rem;
 
     table {
@@ -35,7 +35,9 @@ body {
     }
 }
 
-
+#add-user-btn {
+    margin-top: 20px;
+}
 
 button {
     background-color: $primary-color;

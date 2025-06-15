@@ -38,7 +38,7 @@ function renderData(): void {
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "Edit";
                 editBtn.addEventListener("click", function () {
-                    window.location.href = "usersForm.html?id=" + korisnik.id;
+                    window.location.href = "./usersForm/usersForm.html?id=" + korisnik.id;
                 });
 
                 cell5.appendChild(editBtn);

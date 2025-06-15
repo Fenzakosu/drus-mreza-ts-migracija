@@ -40,14 +40,30 @@ function renderData(): void {
                 editBtn.addEventListener("click", function () {
                     window.location.href = "./usersForm/usersForm.html?id=" + korisnik.id;
                 });
-
                 cell5.appendChild(editBtn);
+
+                const cell6 = document.createElement("td");
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+
+                deleteBtn.onclick = function () {
+                    userService.deleteUser(korisnik.id.toString())
+                        .then(() => {
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error(error.status, error.text);
+                        });
+                };
+
+                cell6.appendChild(deleteBtn);
 
                 newRow.appendChild(cell1);
                 newRow.appendChild(cell2);
                 newRow.appendChild(cell3);
                 newRow.appendChild(cell4);
                 newRow.appendChild(cell5);
+                newRow.appendChild(cell6);
                 table.appendChild(newRow);
             });
         })

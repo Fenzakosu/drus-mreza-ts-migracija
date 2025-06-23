@@ -3,6 +3,7 @@ $color1: whitesmoke;
 $color2: darkslategray;
 $color3: lightsalmon;
 $color4: rgba(255, 255, 255, 0.2);
+$color5: lightgray;
 $warn-color: darkred;
 $text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 $box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -16,7 +17,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 20px;
-    background-color: $color1;
+    background-color: $color5;
     color: white;
     text-shadow: $text-shadow;
 

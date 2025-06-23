@@ -27,6 +27,34 @@ function initializeForm(): void {
     }
 }
 
+function setButtonDisabled(disabled: boolean): void {
+    const btn = document.querySelector("#submitBtn") as HTMLButtonElement;
+    if (disabled) {
+        btn.disabled = true;
+        btn.classList.add("disabled");
+    } else {
+        btn.disabled = false;
+        btn.classList.remove("disabled");
+    }
+}
+
+function showSpinner(show: boolean): void {
+    const spinner = document.getElementById('spinner');
+    if (spinner) {
+        if (show) {
+            spinner.classList.add("visible");
+        } else {
+            spinner.classList.remove("visible");
+        }
+    }
+}
+
+function showError(message: string): void {
+    const errorDiv = document.querySelector("#errorMessage") as HTMLElement;
+    errorDiv.textContent = message;
+}
+
+
 function submit(): void {
     const korIme = (document.querySelector('#korIme') as HTMLInputElement).value;
     const ime = (document.querySelector('#ime') as HTMLInputElement).value;
@@ -35,6 +63,8 @@ function submit(): void {
 
     if (!korIme || !ime || !prezime || !datumRodjenjaInput.value) {
         alert("Sva polja su obavezna!");
+        setButtonDisabled(false);
+        showSpinner(false);
         return;
     }
 
@@ -51,22 +81,58 @@ function submit(): void {
     const urlparams = new URLSearchParams(queryString);
     const id = urlparams.get('id');
 
+    const startTime = Date.now();
+    const MIN_DURATION = 700;
+
+    setButtonDisabled(true);
+    showSpinner(true);
+    showError("");
+
     if (id) {
         userService.update(id, formData)
             .then(() => {
-                window.location.href = '../index.html'
+                const elapsed = Date.now() - startTime;
+                const waitTime = Math.max(0, MIN_DURATION - elapsed);
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, waitTime);
             }).catch(error => {
-                console.error(error.status, error.text);
+
+                const elapsed = Date.now() - startTime;
+                const waitTime = Math.max(0, MIN_DURATION - elapsed);
+
+                setTimeout(() => {
+                    showError("Greška prilikom čuvanja korisnika.");
+                    setButtonDisabled(false);
+                    showSpinner(false);
+                    console.error(error.status, error.text);
+                }, waitTime);
             })
+
     }
     else {
         userService.add(formData)
             .then(() => {
-                window.location.href = '../index.html';
+                const elapsed = Date.now() - startTime;
+                const waitTime = Math.max(0, MIN_DURATION - elapsed);
+
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, waitTime);
             })
             .catch(error => {
-                console.error(error.status, error.text);
-            });
+
+                const elapsed = Date.now() - startTime;
+                const waitTime = Math.max(0, MIN_DURATION - elapsed);
+
+                setTimeout(() => {
+                    showError("Greška prilikom čuvanja korisnika.");
+                    setButtonDisabled(false);
+                    showSpinner(false);
+                    console.error(error.status, error.text);
+                }, waitTime);
+            })
+
     }
 }
 

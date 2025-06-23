@@ -48,9 +48,13 @@
         <span id="datumRodjenjaError"></span>
         <br />
       </form>
+      <div id="errorMessage" style="color: darkred; margin-top: 10px;"></div>
+      <div id="spinner" aria-hidden="true"></div>
       <div class="actions">
-        <button id="submitBtn">Submit</button>
-        
+        <button id="submitBtn" aria-describedby="tooltip">Submit</button>
+        <div id="tooltip" class="tooltip" role="tooltip">
+          Klikom se čuvaju izmene korisnika.
+        </div>
       </div>
     </div>
     

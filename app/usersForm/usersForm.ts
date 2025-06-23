@@ -3,6 +3,8 @@ import { UserService } from "../services/user.service.js";
 
 const userService = new UserService();
 
+
+
 function initializeForm(): void {
     const queryString = window.location.search;
     const urlparams = new URLSearchParams(queryString);
@@ -27,16 +29,7 @@ function initializeForm(): void {
     }
 }
 
-function setButtonDisabled(disabled: boolean): void {
-    const btn = document.querySelector("#submitBtn") as HTMLButtonElement;
-    if (disabled) {
-        btn.disabled = true;
-        btn.classList.add("disabled");
-    } else {
-        btn.disabled = false;
-        btn.classList.remove("disabled");
-    }
-}
+
 
 function showSpinner(show: boolean): void {
     const spinner = document.getElementById('spinner');
@@ -55,20 +48,25 @@ function showError(message: string): void {
 }
 
 
-function submit(): void {
+function submit(event: Event): void {
+    event.preventDefault();
+    console.log("Submit pozvan.")
     const korIme = (document.querySelector('#korIme') as HTMLInputElement).value;
     const ime = (document.querySelector('#ime') as HTMLInputElement).value;
     const prezime = (document.querySelector('#prezime') as HTMLInputElement).value;
     const datumRodjenjaInput = document.querySelector('#datumRodjenja') as HTMLInputElement;
+    const submitBtn = document.querySelector("#submitBtn") as HTMLButtonElement;
 
     if (!korIme || !ime || !prezime || !datumRodjenjaInput.value) {
         alert("Sva polja su obavezna!");
-        setButtonDisabled(false);
         showSpinner(false);
         return;
     }
 
     const datumRodjenja = new Date(datumRodjenjaInput.value);
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add("disabled");
 
     const formData: KorisnikFormData = {
         korIme,
@@ -82,9 +80,9 @@ function submit(): void {
     const id = urlparams.get('id');
 
     const startTime = Date.now();
-    const MIN_DURATION = 700;
+    const MIN_DURATION = 2000;
 
-    setButtonDisabled(true);
+
     showSpinner(true);
     showError("");
 
@@ -94,8 +92,10 @@ function submit(): void {
                 const elapsed = Date.now() - startTime;
                 const waitTime = Math.max(0, MIN_DURATION - elapsed);
                 setTimeout(() => {
+                    submitBtn.disabled = true;
                     window.location.href = '../index.html';
                 }, waitTime);
+
             }).catch(error => {
 
                 const elapsed = Date.now() - startTime;
@@ -103,7 +103,7 @@ function submit(): void {
 
                 setTimeout(() => {
                     showError("Greška prilikom čuvanja korisnika.");
-                    setButtonDisabled(false);
+
                     showSpinner(false);
                     console.error(error.status, error.text);
                 }, waitTime);
@@ -117,6 +117,8 @@ function submit(): void {
                 const waitTime = Math.max(0, MIN_DURATION - elapsed);
 
                 setTimeout(() => {
+                    submitBtn.disabled = true;
+
                     window.location.href = '../index.html';
                 }, waitTime);
             })
@@ -127,7 +129,7 @@ function submit(): void {
 
                 setTimeout(() => {
                     showError("Greška prilikom čuvanja korisnika.");
-                    setButtonDisabled(false);
+
                     showSpinner(false);
                     console.error(error.status, error.text);
                 }, waitTime);
@@ -140,8 +142,9 @@ function submit(): void {
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeForm();
-    const button = document.querySelector("#submitBtn");
+    const button = document.querySelector("#submitBtn") as HTMLButtonElement;
+
     if (button) {
-        button.addEventListener("click", submit);
+        button.addEventListener("click", (e) => submit(e));
     }
 })

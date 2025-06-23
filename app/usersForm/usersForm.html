@@ -8,7 +8,7 @@
       href="../../dist/usersForm/usersForm.css"
     />
     <title>Dodaj korisnika</title>
-    <script type="module" src="../../dist/usersForm/usersForm.js"></script>
+    <script type="module" src="../../dist/usersForm/usersForm.js" defer></script>
   </head>
   <body>
     <nav class="navbar">
@@ -47,15 +47,17 @@
         <input type="date" id="datumRodjenja" name="datumRodjenja" />
         <span id="datumRodjenjaError"></span>
         <br />
-      </form>
-      <div id="errorMessage" style="color: darkred; margin-top: 10px;"></div>
-      <div id="spinner" aria-hidden="true"></div>
-      <div class="actions">
-        <button id="submitBtn" aria-describedby="tooltip">Submit</button>
-        <div id="tooltip" class="tooltip" role="tooltip">
-          Klikom se čuvaju izmene korisnika.
+        <div class="actions">
+          <button id="submitBtn" type="submit" aria-describedby="tooltip">Submit</button>
+          <div id="tooltip" class="tooltip" role="tooltip">
+            Klikom se čuvaju izmene korisnika.
+          </div>
         </div>
-      </div>
+        <div id="errorMessage" style="color: darkred; margin-top: 10px;"></div>
+        <div id="spinner" aria-hidden="true"></div>
+        
+      </form>
+      
     </div>
     
   </body>
